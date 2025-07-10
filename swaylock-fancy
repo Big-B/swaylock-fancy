@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Author: Brandon Mittman <brandonmittman@gmail.com>
-# Dependencies: imagemagick, grim (optional)
+# Dependencies: imagemagick, wlr-randr, grim (optional)
 set -o errexit -o noclobber -o nounset
 
 PREFIX="${PREFIX:-$(pwd)}"
@@ -17,13 +17,7 @@ declare -a outputs
 declare -a images
 
 # parse wm client for display names
-if [[ "$XDG_CURRENT_DESKTOP" == "Hyprland" ]]; then
-    poutputs=$(hyprctl monitors -j | jq -rc '.[] | .name')
-elif [[ "$XDG_CURRENT_DESKTOP" == "niri" ]]; then
-    poutputs=$(niri msg -j outputs | jq -r '.[] | .name')
-else
-    poutputs=$(swaymsg -t get_outputs | jq -r '.[] | select(.active != false) | .name')
-fi
+poutputs=$(wlr-randr --json | jq -r '.[] | select(.enabled == true) | .name')
 
 while read -r line; do
     outputs+=($line)

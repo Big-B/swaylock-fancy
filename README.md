@@ -15,6 +15,7 @@ Dependencies
 * jq
 * util-linux
 * grim
+* wlr-randr
 
 Optional Dependencies
 ---------------------
