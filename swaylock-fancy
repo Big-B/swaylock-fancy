@@ -3,7 +3,8 @@
 # Dependencies: imagemagick, wlr-randr, grim (optional)
 set -o errexit -o noclobber -o nounset
 
-PREFIX="${PREFIX:-$(pwd)}"
+script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+PREFIX="${PREFIX:-$script_dir}"
 
 hue=(-level "0%,100%,0.6")
 effect=(-filter Gaussian -resize 20% -define "filter:sigma=1.5" -resize 500%)
